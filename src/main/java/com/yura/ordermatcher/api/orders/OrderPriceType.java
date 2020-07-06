@@ -1,4 +1,4 @@
-package com.yura.ordermatcher.api;
+package com.yura.ordermatcher.api.orders;
 
 public enum OrderPriceType {
     LIMIT, MARKET;

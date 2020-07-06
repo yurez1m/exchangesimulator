@@ -1,6 +1,6 @@
-package com.yura.ordermatcher.services;
+package com.yura.ordermatcher.orderbook;
 
-public class NumberUtils {
+class NumberUtils {
     private final static int precision = 10;
     private final static double multiplier = Math.pow(10, precision);
     private final static long NanLong = Long.MIN_VALUE;

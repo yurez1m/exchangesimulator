@@ -1,7 +1,6 @@
-package com.yura.ordermatcher.model;
+package com.yura.ordermatcher.orders;
 
-import com.yura.ordermatcher.api.OrderPriceType;
-import com.yura.ordermatcher.api.Side;
+import com.yura.ordermatcher.api.orders.OrderPriceType;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -16,12 +15,7 @@ public class Order {
     private double price;
     private long initQty;
     private long cumQty;
-    private Side side;
+    private boolean bid;
     private OrderPriceType orderPriceType;
     private long leftSize;
-
-    public void addExecSize(long execSize) {
-        this.cumQty += execSize;
-        this.leftSize = this.initQty - this.cumQty;
-    }
 }

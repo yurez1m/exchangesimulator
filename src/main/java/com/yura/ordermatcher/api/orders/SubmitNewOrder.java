@@ -1,7 +1,5 @@
-package com.yura.ordermatcher.api.in;
+package com.yura.ordermatcher.api.orders;
 
-import com.yura.ordermatcher.api.OrderPriceType;
-import com.yura.ordermatcher.api.Side;
 import lombok.Data;
 
 @Data
@@ -11,5 +9,5 @@ public class SubmitNewOrder {
     private double price;
     private int size;
     private OrderPriceType orderPriceType;
-    private Side side;
+    private boolean bid;
 }
