@@ -11,7 +11,6 @@ import static org.junit.Assert.assertTrue;
 
 public class OrderBookTest {
 
-
     @Test
     public void testFindMatchableOrders() {
         OrderBook orderBook = new OrderBook();
