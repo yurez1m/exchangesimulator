@@ -1,10 +1,7 @@
 package com.yura.ordermatcher.repositories;
 
 import com.yura.ordermatcher.orders.Order;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-
-@Repository
-public interface OrderRepository extends CrudRepository<Order, Long> {
+public interface OrderRepository extends MongoRepository<Order, Long> {
 }

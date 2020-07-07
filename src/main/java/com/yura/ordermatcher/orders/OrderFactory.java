@@ -12,7 +12,7 @@ public class OrderFactory {
     }
 
     public Order fromSubmit(SubmitNewOrder submitNewOrder) {
-        Order order = new Order(submitNewOrder.getClientOrderId(), idGenerator.getNextId(), submitNewOrder.getSymbol());
+        Order order = new Order(idGenerator.getNextId(), submitNewOrder.getClientOrderId(), submitNewOrder.getSymbol());
         order.setPrice(submitNewOrder.getPrice());
         order.setBid(submitNewOrder.isBid());
         order.setInitQty(submitNewOrder.getSize());

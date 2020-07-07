@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,12 +16,14 @@ public class OrderManager {
     private final Logger logger = LogManager.getLogger(OrderManager.class);
     private final OrderBookManager orderBookManager;
     private final OrderTradingRegister orderTradingRegister;
+    private final OrderStateMachine orderStateMachine;
 
     private final Map<String, Order> ordersByClientOrderId = new ConcurrentHashMap<>();
 
-    public OrderManager(OrderBookManager orderBookManager, OrderTradingRegister orderTradingRegister) {
+    public OrderManager(OrderBookManager orderBookManager, OrderTradingRegister orderTradingRegister, OrderStateMachine orderStateMachine) {
         this.orderBookManager = orderBookManager;
         this.orderTradingRegister = orderTradingRegister;
+        this.orderStateMachine = orderStateMachine;
     }
 
     public void placeOrder(Order order) {
@@ -30,6 +31,7 @@ public class OrderManager {
         ordersByClientOrderId.put(order.getClientOrderId(), order);
         BookEntry bookEntry = convertToBookEntry(order);
         orderBookManager.putEntry(bookEntry, order.getSymbol());
+        orderStateMachine.onSubmit(order);
     }
 
     private BookEntry convertToBookEntry(Order order) {
@@ -37,6 +39,7 @@ public class OrderManager {
             @Override
             public void onMatch(double price, long size) {
                 orderTradingRegister.onOrderTraded(order, size, price);
+                orderStateMachine.onFill(order);
             }
         };
     }
@@ -46,6 +49,7 @@ public class OrderManager {
         Order order = ordersByClientOrderId.get(clientOrderId);
         if (order != null) {
             orderBookManager.removeEntry(order.getSymbol(), order.getExchangeOrderId());
+            orderStateMachine.onCancelled(order);
             logger.info("Order {} removed", order);
         } else {
             logger.info("Cannot find order by id {} for cancel", clientOrderId);
