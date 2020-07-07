@@ -14,8 +14,8 @@ public class PriceReceiver {
     }
 
     public void onNewPrice(Price price) {
-        orderBookManager.removeEntry(0, price.getSymbol());
-        orderBookManager.removeEntry(1, price.getSymbol());
+        orderBookManager.removeEntry(price.getSymbol(), 0);
+        orderBookManager.removeEntry(price.getSymbol(), 1);
         orderBookManager.putEntry(convertToBookEntry(price, true), price.getSymbol());
         orderBookManager.putEntry(convertToBookEntry(price, false), price.getSymbol());
     }
