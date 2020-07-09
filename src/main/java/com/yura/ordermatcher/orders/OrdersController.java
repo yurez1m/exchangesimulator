@@ -5,6 +5,7 @@ import com.yura.ordermatcher.api.orders.SubmitNewOrder;
 import com.yura.ordermatcher.api.orders.SubmitAck;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
@@ -21,7 +22,7 @@ public class OrdersController {
     }
 
     @PostMapping("/submit")
-    public SubmitAck placeOrder(SubmitNewOrder submitCommand) {
+    public SubmitAck placeOrder(@RequestBody SubmitNewOrder submitCommand) {
         Order order = orderFactory.fromSubmit(submitCommand);
         orderManager.placeOrder(order);
         return new SubmitAck(order.getExchangeOrderId(), submitCommand.getClientOrderId());
