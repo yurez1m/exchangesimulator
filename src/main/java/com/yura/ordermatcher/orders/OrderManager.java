@@ -30,8 +30,8 @@ public class OrderManager {
         logger.info("On submit new order {} ", order);
         ordersByClientOrderId.put(order.getClientOrderId(), order);
         BookEntry bookEntry = convertToBookEntry(order);
-        orderBookManager.putEntry(bookEntry, order.getSymbol());
         orderStateMachine.onSubmit(order);
+        orderBookManager.putEntry(bookEntry, order.getSymbol());
     }
 
     private BookEntry convertToBookEntry(Order order) {
@@ -39,7 +39,7 @@ public class OrderManager {
             @Override
             public void onMatch(double price, long size) {
                 orderTradingRegister.onOrderTraded(order, size, price);
-                orderStateMachine.onFill(order);
+                orderStateMachine.onFill(order, size);
             }
         };
     }

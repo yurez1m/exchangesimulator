@@ -3,6 +3,8 @@ package com.yura.ordermatcher.orders;
 import com.yura.ordermatcher.api.orders.SubmitNewOrder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class OrderFactory {
     private final IdGenerator idGenerator;
@@ -16,7 +18,10 @@ public class OrderFactory {
         order.setPrice(submitNewOrder.getPrice());
         order.setBid(submitNewOrder.isBid());
         order.setInitQty(submitNewOrder.getSize());
-        order.setOrderPriceType(submitNewOrder.getOrderPriceType());
+        order.setOrderType(submitNewOrder.getOrderType());
+        order.setLeftSize(submitNewOrder.getSize());
+        order.setOrderStatus(OrderStatus.CREATED);
+//        order.setTime(LocalDateTime.now());
         return order;
     }
 }

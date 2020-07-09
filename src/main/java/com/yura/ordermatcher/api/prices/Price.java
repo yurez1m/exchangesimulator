@@ -4,11 +4,22 @@ import lombok.Data;
 
 @Data
 public class Price {
-    private final String symbol;
-    private final double bidPrice;
-    private final long bidSize;
-    private final double askPrice;
-    private final long askSize;
+    private String symbol;
+    private double bidPrice;
+    private long bidSize;
+    private double askPrice;
+    private long askSize;
+
+    public Price() {
+    }
+
+    public Price(String symbol, double bidPrice, long bidSize, double askPrice, long askSize) {
+        this.symbol = symbol;
+        this.bidPrice = bidPrice;
+        this.bidSize = bidSize;
+        this.askPrice = askPrice;
+        this.askSize = askSize;
+    }
 
     public double getPriceForSide(boolean bid) {
         return bid ? bidPrice : askPrice;

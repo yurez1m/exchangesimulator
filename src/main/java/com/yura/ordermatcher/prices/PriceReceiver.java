@@ -14,14 +14,14 @@ public class PriceReceiver {
     }
 
     public void onNewPrice(Price price) {
-        orderBookManager.removeEntry(price.getSymbol(), 0);
-        orderBookManager.removeEntry(price.getSymbol(), 1);
+        orderBookManager.removeEntry(price.getSymbol(), -1);
+        orderBookManager.removeEntry(price.getSymbol(), -2);
         orderBookManager.putEntry(convertToBookEntry(price, true), price.getSymbol());
         orderBookManager.putEntry(convertToBookEntry(price, false), price.getSymbol());
     }
 
     private BookEntry convertToBookEntry(Price price, boolean bid) {
-        return new BookEntry(bid ? 0 : 1, price.getPriceForSide(bid), price.getSizeForSide(bid), bid) {
+        return new BookEntry(bid ? -1 : -2, price.getPriceForSide(bid), price.getSizeForSide(bid), bid) {
             @Override
             public void onMatch(double price, long size) {
 

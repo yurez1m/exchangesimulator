@@ -35,7 +35,7 @@ public class OrderBookManager {
 
     private void matchWithBook(BookEntry bookEntry, OrderBook orderBook) {
         BookEntry matchingEntry;
-        while ((matchingEntry = orderBook.getBestMatching(bookEntry)) != null) {
+        while ((matchingEntry = orderBook.getBestMatching(bookEntry)) != null && bookEntry.getLeftSize() > 0) {
             matchingService.match(matchingEntry, bookEntry);
             if (matchingEntry.getLeftSize() == 0) {
                 orderBook.removeEntry(matchingEntry.getId());

@@ -16,7 +16,8 @@ public class OrderStateMachine {
         this.orderLongCrudRepository = orderLongCrudRepository;
     }
 
-    public void onFill(Order order) {
+    public void onFill(Order order, long size) {
+        order.setLeftSize(order.getLeftSize() - size);
         if (order.getLeftSize() == 0) {
             moveStatus(order, OrderStatus.FILLED);
             orderLongCrudRepository.save(order);
@@ -32,7 +33,7 @@ public class OrderStateMachine {
     }
 
     private void moveStatus(Order order, OrderStatus aNew) {
-        logger.info("{} : {} -> {}", order.getExchangeOrderId(), order.getOrderStatus(), order.getOrderStatus());
+        logger.info("{} : {} -> {}", order.getExchangeOrderId(), order.getOrderStatus(), aNew);
         order.setOrderStatus(aNew);
     }
 

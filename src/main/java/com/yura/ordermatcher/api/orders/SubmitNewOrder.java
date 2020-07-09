@@ -8,6 +8,8 @@ public class SubmitNewOrder {
     private String symbol;
     private double price;
     private int size;
-    private OrderPriceType orderPriceType;
+    private OrderType orderType;
     private boolean bid;
+
+
 }
